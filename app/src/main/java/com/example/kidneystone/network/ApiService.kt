@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 object ApiService {
-    private const val BASE_URL = "https://world.openfoodfacts.org/api/v0/product/"
+    private const val BASE_URL = "https://world.openfoodfacts.org/api/v2/product/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
