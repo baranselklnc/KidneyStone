@@ -6,7 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 object ApiService {
-    private const val BASE_URL = "https://world.openfoodfacts.org/api/v2/product/"
+    private const val BASE_URL = "https://world.openfoodfacts.org/api/v2/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
@@ -17,6 +17,6 @@ object ApiService {
 }
 
 interface OpenFoodFactsApi {
-    @GET("{barcode}.json")
+    @GET("product/{barcode}.json")
     suspend fun getProductInfo(@Path("barcode") barcode: String): ProductResponse
 }
