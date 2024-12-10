@@ -6,15 +6,6 @@ data class ProductResponse(
 )
 
 data class Product(
-    val product_name: String?, // Ürün adı
-    val ingredients_text: String?, // İçindekiler metni
-    val allergens: String?, // Alerjenler
-    val nutriments: Nutriments? // Besin değerleri
-)
-
-data class Nutriments(
-    val energy: String?,
-    val fat: String?,
-    val carbohydrates: String?,
-    val proteins: String?
+    val product_name: String?,
+    val ingredients_text: String?
 )
