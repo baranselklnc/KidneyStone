@@ -4,6 +4,7 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -50,30 +51,36 @@ class MainActivity : AppCompatActivity() {
             try {
                 val response = ApiService.api.getProductInfo(barcode)
                 withContext(Dispatchers.Main) {
-                    if (response.status == 1 && response.product != null) {
-                        val product = response.product
-                        val productName = product.product_name ?: "Ürün adı bulunamadı"  // Burada 'product_name' kullanılıyor
-                        Toast.makeText(this@MainActivity, "Ürün: $productName", Toast.LENGTH_SHORT).show()
-                        // Alerjen ve besin değerlerini de gösterebilirsiniz
-                        val ingredients = product.ingredients_text ?: "İçindekiler bilgisi yok."
-                        val allergens = product.allergens ?: "Alerjen bilgisi yok."
-                        val nutrients = product.nutriments
-                        val nutrientsInfo = "Enerji: ${nutrients?.energy}, Yağ: ${nutrients?.fat}, Karbonhidrat: ${nutrients?.carbohydrates}, Protein: ${nutrients?.proteins}"
+                    Log.d("API_RESPONSE", "Response: $response")
 
-                        // İçindekiler, Alerjenler ve Besin Değerleri mesajlarını da gösterebiliriz
-                        Toast.makeText(this@MainActivity, "İçindekiler: $ingredients\nAlerjenler: $allergens\nBesin Değerleri: $nutrientsInfo", Toast.LENGTH_LONG).show()
+                    if (response.status == 1 && response.product != null) {
+                        val productName = response.product.product_name ?: "Ürün adı bulunamadı"
+                        val ingredients = response.product.ingredients_text ?: "İçerik bilgisi bulunamadı"
+
+                        Log.d("PRODUCT_DATA", "Ürün adı: $productName, İçerikler: $ingredients")
+
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Ürün: $productName\nİçerik: $ingredients",
+                            Toast.LENGTH_LONG
+                        ).show()
                     } else {
-                        Toast.makeText(this@MainActivity, "Ürün bulunamadı.", Toast.LENGTH_SHORT).show()
+                        Log.d("API_ERROR", "Ürün bulunamadı: ${response.status}")
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Ürün bulunamadı.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    Log.e("API_EXCEPTION", "Hata: ${e.message}")
                     Toast.makeText(this@MainActivity, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
-
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestCameraPermission() {
