@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -51,34 +50,63 @@ class MainActivity : AppCompatActivity() {
             try {
                 val response = ApiService.api.getProductInfo(barcode)
                 withContext(Dispatchers.Main) {
-                    Log.d("API_RESPONSE", "Response: $response")
-
                     if (response.status == 1 && response.product != null) {
                         val productName = response.product.product_name ?: "Ürün adı bulunamadı"
-                        val ingredients = response.product.ingredients_text ?: "İçerik bilgisi bulunamadı"
+                        val sodium = response.product.nutriments?.sodium
+                        val calcium = response.product.nutriments?.calcium
+                        val oxalate = response.product.ingredients_text
 
-                        Log.d("PRODUCT_DATA", "Ürün adı: $productName, İçerikler: $ingredients")
+                        // Risk değerlendirmesi
+                        val riskMessage = evaluateRiskMessage(sodium, calcium, oxalate)
 
                         Toast.makeText(
                             this@MainActivity,
-                            "Ürün: $productName\nİçerik: $ingredients",
+                            "Ürün: $productName\n$riskMessage",
                             Toast.LENGTH_LONG
                         ).show()
                     } else {
-                        Log.d("API_ERROR", "Ürün bulunamadı: ${response.status}")
                         Toast.makeText(
                             this@MainActivity,
-                            "Ürün bulunamadı.",
+                            "Ürün veritabanımızda bulunamadı.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } catch (e: retrofit2.HttpException) {
+                withContext(Dispatchers.Main) {
+                    if (e.code() == 404) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Ürün veritabanımızda bulunamadı.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Bir hata oluştu: ${e.message()}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Log.e("API_EXCEPTION", "Hata: ${e.message}")
                     Toast.makeText(this@MainActivity, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
                 }
             }
+        }
+    }
+
+    private fun evaluateRiskMessage(sodium: Double?, calcium: Double?, oxalate: String?): String {
+        val riskReasons = mutableListOf<String>()
+
+        if (sodium != null && sodium > 1500.0) riskReasons.add("Yüksek sodyum")
+        if (calcium != null && calcium > 1000.0) riskReasons.add("Yüksek kalsiyum")
+        if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add("Oksalat içeriyor")
+
+        return if (riskReasons.isNotEmpty()) {
+            "Risk faktörleri: ${riskReasons.joinToString(", ")}"
+        } else {
+            "Böbrek taşı riski bulunmuyor."
         }
     }
 
