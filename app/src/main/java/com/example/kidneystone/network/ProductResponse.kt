@@ -31,6 +31,6 @@ data class Product(
 )
 
 data class Nutriments(
-    val sodium: Double?, // mg cinsinden
-    val calcium: Double? // mg cinsinden
+    val sodium_100g: Double?,
+    val calcium_100g: Double?,
 )
