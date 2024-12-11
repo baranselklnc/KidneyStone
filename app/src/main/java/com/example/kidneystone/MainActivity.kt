@@ -51,12 +51,13 @@ class MainActivity : AppCompatActivity() {
                 val response = ApiService.api.getProductInfo(barcode)
                 withContext(Dispatchers.Main) {
                     if (response.status == 1 && response.product != null) {
-                        val productName = response.product.product_name ?: "Ürün adı bulunamadı"
-                        val sodium = response.product.nutriments?.sodium
-                        val calcium = response.product.nutriments?.calcium
-                        val oxalate = response.product.ingredients_text
+                        val product = response.product
 
-                        // Risk değerlendirmesi
+                        val productName = product.product_name ?: "Ürün adı bulunamadı"
+                        val sodium = product.nutriments?.sodium_100g?.times(1000) // mg olarak hesaplama
+                        val calcium = product.nutriments?.calcium_100g?.times(1000) // mg olarak hesaplama
+                        val oxalate = product.ingredients_text
+
                         val riskMessage = evaluateRiskMessage(sodium, calcium, oxalate)
 
                         Toast.makeText(
@@ -67,23 +68,7 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             this@MainActivity,
-                            "Ürün veritabanımızda bulunamadı.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            } catch (e: retrofit2.HttpException) {
-                withContext(Dispatchers.Main) {
-                    if (e.code() == 404) {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Ürün veritabanımızda bulunamadı.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Bir hata oluştu: ${e.message()}",
+                            "Ürün veritabanında bulunamadı.",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
