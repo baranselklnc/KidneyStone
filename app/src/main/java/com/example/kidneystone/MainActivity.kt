@@ -13,6 +13,7 @@ import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.example.kidneystone.network.ApiService
+import com.example.kidneystone.network.Product
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -44,38 +45,109 @@ class MainActivity : AppCompatActivity() {
 
         requestCameraPermission()
     }
+    private fun evaluateRisk(product: Product): Boolean {
+        // Nutriments üzerinden risk değerlendirmesi
+        val sodium = product.nutriments?.sodium_100g
+        val calcium = product.nutriments?.calcium_100g
+
+        // Sodyum veya kalsiyum yüksekse risk var
+        if ((sodium != null && sodium > 1500.0) || (calcium != null && calcium > 1000.0)) {
+            return true
+        }
+
+        // İçeriklerde oksalat varsa risk var
+        val ingredients = product.ingredients_text
+        if (ingredients != null && ingredients.contains("oxalate", ignoreCase = true)) {
+            return true
+        }
+
+        // Risk bulunmadı
+        return false
+    }
+
 
     private fun fetchProductInfo(barcode: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = ApiService.api.getProductInfo(barcode)
+
                 withContext(Dispatchers.Main) {
-                    if (response.status == 1 && response.product != null) {
-                        val product = response.product
+                    when {
+                        response.status == 1 && response.product != null -> {
+                            val product = response.product
+                            val productName = product.product_name ?: "Ürün adı bulunamadı"
+                            val ingredients = product.ingredients_text ?: "İçerik bilgisi bulunamadı"
 
-                        val productName = product.product_name ?: "Ürün adı bulunamadı"
-                        val sodium = product.nutriments?.sodium_100g?.times(1000) // mg olarak hesaplama
-                        val calcium = product.nutriments?.calcium_100g?.times(1000) // mg olarak hesaplama
-                        val oxalate = product.ingredients_text
+                            // Risk değerlendirmesi
+                            val risk = evaluateRisk(product)
+                            val riskMessage = if (risk) {
+                                "Bu ürün böbrek taşı riski taşıyabilir!"
+                            } else {
+                                "Bu ürün böbrek taşı riski taşımıyor."
+                            }
 
-                        val riskMessage = evaluateRiskMessage(sodium, calcium, oxalate)
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Ürün: $productName\nİçerik: $ingredients\n$riskMessage",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
 
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Ürün: $productName\n$riskMessage",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            this@MainActivity,
-                            "Ürün veritabanında bulunamadı.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        response.status == 0 -> {
+                            // Ürün veritabanında bulunamadı
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        else -> {
+                            // Beklenmedik durumlar için genel hata mesajı
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            } catch (e: retrofit2.HttpException) {
+                withContext(Dispatchers.Main) {
+                    when (e.code()) {
+                        404 -> {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        500 -> {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Sunucularımız yanıt veremiyor daha sonra tekrar deneyiniz",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        else -> {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Bir hata oluştu: HTTP ${e.code()}",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, "Hata: ${e.message}", Toast.LENGTH_SHORT).show()
+                    // Genel ağ hataları veya diğer durumlar
+                    val errorMessage = if (e.message?.contains("Unable to resolve host") == true) {
+                        "İnternet bağlantısı yok. Lütfen bağlantınızı kontrol edin."
+                    } else {
+                        "Bir hata oluştu: ${e.localizedMessage ?: "Bilinmeyen hata"}"
+                    }
+
+                    Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
                 }
             }
         }
