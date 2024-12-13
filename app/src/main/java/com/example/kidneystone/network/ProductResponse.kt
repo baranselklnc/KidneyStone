@@ -5,22 +5,9 @@ data class ProductResponse(
     val product: Product?,
     val isRisky: Boolean,
 
-){
-    fun evaluateRisk(): Boolean {
-        // Kategoriye göre analiz
-        if (product?.categories_tags?.contains("tomato-products") == true) {
-            return true // Oksalat riski
-        }
+)
 
-        // Alternatif kategori kontrolü
-        if (product?.categories?.contains("Tomato") == true) {
-            return true // Oksalat riski
-        }
 
-        return false // Risk bulunamadı
-    }
-
-}
 
 data class Product(
     val product_name: String?,
