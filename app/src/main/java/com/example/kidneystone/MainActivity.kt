@@ -66,11 +66,8 @@ class MainActivity : AppCompatActivity() {
         return false
     }
     private fun navigateToResultScreen(risk: Boolean, riskMessage: String) {
-        val intent = Intent(this, ResultActivity::class.java).apply {
-            putExtra("risk", risk)
-            putExtra("riskMessage", riskMessage)
-        }
-        startActivity(intent)
+        val dialog = ResultDialogFragment.newInstance(risk, riskMessage)
+        dialog.show(supportFragmentManager, "ResultDialog")
     }
 
 
