@@ -34,7 +34,6 @@ android {
         jvmTarget = "1.8"
     }
 }
-val lottieVersion="6.6.1"
 dependencies {
     implementation (libs.lottie)
     implementation (libs.code.scanner)
