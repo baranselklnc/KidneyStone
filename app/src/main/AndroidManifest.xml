@@ -19,9 +19,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.KidneyStone"
         tools:targetApi="31">
-        <activity
-            android:name=".ResultActivity"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="true">
