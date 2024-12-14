@@ -1,6 +1,7 @@
 package com.example.kidneystone
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -64,90 +65,51 @@ class MainActivity : AppCompatActivity() {
         // Risk bulunmadı
         return false
     }
+    private fun navigateToResultScreen(risk: Boolean, riskMessage: String) {
+        val intent = Intent(this, ResultActivity::class.java).apply {
+            putExtra("risk", risk)
+            putExtra("riskMessage", riskMessage)
+        }
+        startActivity(intent)
+    }
+
 
 
     private fun fetchProductInfo(barcode: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = ApiService.api.getProductInfo(barcode)
-
                 withContext(Dispatchers.Main) {
-                    when {
-                        response.status == 1 && response.product != null -> {
-                            val product = response.product
-                            val productName = product.product_name ?: "Ürün adı bulunamadı"
-                            val ingredients = product.ingredients_text ?: "İçerik bilgisi bulunamadı"
-
-                            // Risk değerlendirmesi
-                            val risk = evaluateRisk(product)
-                            val riskMessage = if (risk) {
-                                "Bu ürün böbrek taşı riski taşıyabilir!"
-                            } else {
-                                "Bu ürün böbrek taşı riski taşımıyor."
-                            }
-
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Ürün: $productName\nİçerik: $ingredients\n$riskMessage",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
-                        response.status == 0 -> {
-                            // Ürün veritabanında bulunamadı
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-
-                        else -> {
-                            // Beklenmedik durumlar için genel hata mesajı
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-            } catch (e: retrofit2.HttpException) {
-                withContext(Dispatchers.Main) {
-                    when (e.code()) {
-                        404 -> {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        500 -> {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Sunucularımız yanıt veremiyor daha sonra tekrar deneyiniz",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        else -> {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Bir hata oluştu: HTTP ${e.code()}",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
+                    if (response.status == 1 && response.product != null) {
+                        val product = response.product
+                        val risk = evaluateRisk(product)
+                        val riskMessage = evaluateRiskMessage(
+                            product.nutriments?.sodium_100g,
+                            product.nutriments?.calcium_100g,
+                            product.ingredients_text
+                        )
+                        navigateToResultScreen(risk, riskMessage)
+                    } else if (response.status == 0) {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@MainActivity,
+                            "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    // Genel ağ hataları veya diğer durumlar
-                    val errorMessage = if (e.message?.contains("Unable to resolve host") == true) {
-                        "İnternet bağlantısı yok. Lütfen bağlantınızı kontrol edin."
-                    } else {
-                        "Bir hata oluştu: ${e.localizedMessage ?: "Bilinmeyen hata"}"
-                    }
-
-                    Toast.makeText(this@MainActivity, errorMessage, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Bir hata oluştu: ${e.localizedMessage}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
