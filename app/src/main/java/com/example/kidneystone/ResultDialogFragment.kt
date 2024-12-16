@@ -1,9 +1,7 @@
 package com.example.kidneystone
 
-import android.app.AlertDialog
-import android.app.Dialog
+
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +9,7 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.airbnb.lottie.LottieAnimationView
+import com.example.kidneystone.listener.DialogFragmentListener
 
 class ResultDialogFragment : DialogFragment() {
 
@@ -55,6 +54,11 @@ class ResultDialogFragment : DialogFragment() {
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
+    override fun onDetach() {
+        super.onDetach()
+        (activity as? DialogFragmentListener)?.onDialogClosed()
+    }
+
 
     companion object {
         private const val ARG_RISK = "risk"
