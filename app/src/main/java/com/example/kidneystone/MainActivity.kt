@@ -1,7 +1,6 @@
 package com.example.kidneystone
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +12,7 @@ import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
+import com.example.kidneystone.listener.DialogFragmentListener
 import com.example.kidneystone.network.ApiService
 import com.example.kidneystone.network.Product
 import kotlinx.coroutines.CoroutineScope
@@ -20,9 +20,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),DialogFragmentListener {
 
     private lateinit var codeScanner: CodeScanner
+    override fun onDialogClosed() {
+        codeScanner.startPreview() // Kamerayı yeniden başlat
+    }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
 
         requestCameraPermission()
     }
+
     private fun evaluateRisk(product: Product): Boolean {
         // Nutriments üzerinden risk değerlendirmesi
         val sodium = product.nutriments?.sodium_100g
