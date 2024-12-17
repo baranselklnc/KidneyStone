@@ -1,6 +1,5 @@
 package com.example.kidneystone
 
-
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,16 +26,24 @@ class ResultDialogFragment : DialogFragment() {
         val messageView = view.findViewById<TextView>(R.id.tvMessage)
         val closeButton = view.findViewById<Button>(R.id.btnClose)
 
-        val risk = arguments?.getBoolean("risk") ?: false
-        val riskMessage = arguments?.getString("riskMessage") ?: ""
+        val risk = arguments?.getBoolean(ARG_RISK, false) ?: false
+        val riskMessage = arguments?.getString(ARG_RISK_MESSAGE, "")
+        val notFound = arguments?.getBoolean(ARG_NOT_FOUND, false) ?: false
 
-        if (risk) {
-            animationView.setAnimation(R.raw.unhealthy) // Olumsuz animasyon
-            messageView.text = "Bu ürün böbrek taşı riski taşıyabilir!\n$riskMessage"
-        } else {
-            animationView.setAnimation(R.raw.healthy) // Olumlu animasyon
-            messageView.text =
-                "Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin."
+        when {
+            notFound -> { // Ürün bulunamadı durumu
+                animationView.setAnimation(R.raw.notfound) // Ürün bulunamadı animasyonu
+                messageView.text = "Üzgünüz, bu ürün veritabanımızda bulunamadı."
+            }
+            risk -> { // Risk durumu
+                animationView.setAnimation(R.raw.unhealthy) // Olumsuz animasyon
+                messageView.text = "Bu ürün böbrek taşı riski taşıyabilir!\n$riskMessage"
+            }
+            else -> { // Risk yok
+                animationView.setAnimation(R.raw.healthy) // Olumlu animasyon
+                messageView.text =
+                    "Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin."
+            }
         }
 
         animationView.playAnimation()
@@ -54,21 +61,23 @@ class ResultDialogFragment : DialogFragment() {
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
+
     override fun onDetach() {
         super.onDetach()
         (activity as? DialogFragmentListener)?.onDialogClosed()
     }
 
-
     companion object {
         private const val ARG_RISK = "risk"
         private const val ARG_RISK_MESSAGE = "riskMessage"
+        private const val ARG_NOT_FOUND = "notFound"
 
-        fun newInstance(risk: Boolean, riskMessage: String): ResultDialogFragment {
+        fun newInstance(risk: Boolean? = null, riskMessage: String? = null, notFound: Boolean = false): ResultDialogFragment {
             val fragment = ResultDialogFragment()
             val args = Bundle().apply {
-                putBoolean(ARG_RISK, risk)
-                putString(ARG_RISK_MESSAGE, riskMessage)
+                risk?.let { putBoolean(ARG_RISK, it) }
+                riskMessage?.let { putString(ARG_RISK_MESSAGE, it) }
+                putBoolean(ARG_NOT_FOUND, notFound)
             }
             fragment.arguments = args
             return fragment
