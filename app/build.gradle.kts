@@ -33,11 +33,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        dataBinding=true
-    }
+
 }
 dependencies {
+    implementation (libs.androidx.viewpager2)
+    implementation (libs.dotsindicator)
     implementation (libs.lottie)
     implementation (libs.code.scanner)
     implementation (libs.kotlinx.coroutines.android)
