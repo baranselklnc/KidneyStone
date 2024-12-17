@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
         val calcium = product.nutriments?.calcium_100g
 
         // Sodyum veya kalsiyum yüksekse risk var
-        if ((sodium != null && sodium > 1500.0) || (calcium != null && calcium > 1000.0)) {
+        if ((sodium != null && sodium > 1500.0) || (calcium != null && calcium > 1.0)) {
             return true
         }
 
@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                             product.ingredients_text
                         )
                         navigateToResultScreen(risk, riskMessage)
-                    } else if (response.status == 0) {
+                    } else if (response.status == 0 || response.status == 404) {
                         Toast.makeText(
                             this@MainActivity,
                             "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.",
@@ -104,13 +104,18 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                         ).show()
                     }
                 }
-            } catch (e: Exception) {
+            } catch (e: java.net.SocketTimeoutException) {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@MainActivity,
-                        "Bir hata oluştu: ${e.localizedMessage}",
+                        "Zaman aşımı hatası. Lütfen internet bağlantınızı kontrol edin.",
                         Toast.LENGTH_SHORT
                     ).show()
+                }
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    val dialog = ResultDialogFragment.newInstance(notFound = true)
+                    dialog.show(supportFragmentManager, "ResultDialog")
                 }
             }
         }
@@ -119,8 +124,8 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
     private fun evaluateRiskMessage(sodium: Double?, calcium: Double?, oxalate: String?): String {
         val riskReasons = mutableListOf<String>()
 
-        if (sodium != null && sodium > 1500.0) riskReasons.add("Yüksek sodyum")
-        if (calcium != null && calcium > 1000.0) riskReasons.add("Yüksek kalsiyum")
+        if (sodium != null && sodium > 1.0) riskReasons.add("Yüksek sodyum")
+        if (calcium != null && calcium > 1.0) riskReasons.add("Yüksek kalsiyum")
         if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add("Oksalat içeriyor")
 
         return if (riskReasons.isNotEmpty()) {
