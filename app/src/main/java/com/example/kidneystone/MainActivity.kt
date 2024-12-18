@@ -1,6 +1,8 @@
 package com.example.kidneystone
 
 import android.Manifest
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -30,7 +32,19 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val sharedPref = getSharedPreferences("Onboarding", Context.MODE_PRIVATE)
+        val isOnboardingCompleted = sharedPref.getBoolean("isOnboardingCompleted", false)
+        if (!isOnboardingCompleted) {
+            // Eğer onboarding tamamlanmadıysa, onboarding ekranına yönlendir
+            startActivity(Intent(this, OnboardingActivity::class.java))
+            finish() // MainActivity'yi kapat
+            return
+        }
         setContentView(R.layout.activity_main)
+
+
+
+
 
         val scannerView = findViewById<CodeScannerView>(R.id.scannerView)
         codeScanner = CodeScanner(this, scannerView)
