@@ -2,24 +2,21 @@ package com.example.kidneystone
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.viewpager2.widget.ViewPager2
-import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 class OnboardingActivity : AppCompatActivity() {
 
     private lateinit var viewPager: ViewPager2
-    private lateinit var dotsIndicator: DotsIndicator
+    private lateinit var wormDotsIndicator: WormDotsIndicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_onboarding)
 
         viewPager = findViewById(R.id.viewPager)
-        dotsIndicator = findViewById(R.id.dotsIndicator)
+        wormDotsIndicator = findViewById(R.id.wormDotsIndicator)
 
         val fragments = listOf(
             WelcomeFragment(),
@@ -29,8 +26,7 @@ class OnboardingActivity : AppCompatActivity() {
         val adapter = OnboardingPagerAdapter(this, fragments)
         viewPager.adapter = adapter
 
-        // Dots göstergesi ile ViewPager'ı bağla
-        dotsIndicator.attachTo(viewPager)
+        wormDotsIndicator.attachTo(viewPager)
         val prefs = getSharedPreferences("onboarding", MODE_PRIVATE)
         if (prefs.getBoolean("isFirstRun", true)) {
             // İlk çalıştırma, onboarding göster
