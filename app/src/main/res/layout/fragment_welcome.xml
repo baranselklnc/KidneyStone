@@ -32,6 +32,5 @@
         android:fontFamily="@font/poppins_thin"
         android:text="Sola Kaydırın"
         android:textColor="@color/success"
-
         />
 </LinearLayout>
