@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.airbnb.lottie.LottieAnimationView
 
 class CtaFragment : Fragment() {
 
@@ -16,6 +17,11 @@ class CtaFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cta, container, false)
+
+        val ctaAnim=view.findViewById<LottieAnimationView>(R.id.ctaAnim)
+        ctaAnim.setAnimation(R.raw.shopping)
+        ctaAnim.playAnimation()
+
 
         val startAppButton = view.findViewById<Button>(R.id.btnStartApp)
         startAppButton.setOnClickListener {
