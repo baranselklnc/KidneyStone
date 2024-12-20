@@ -55,11 +55,13 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
             }
         }
 
+        /*
         codeScanner.errorCallback = ErrorCallback {
             runOnUiThread {
                 Toast.makeText(this, "Hata: ${it.message}", Toast.LENGTH_SHORT).show()
             }
         }
+        */
 
         requestCameraPermission()
     }
