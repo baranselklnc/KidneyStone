@@ -20,12 +20,12 @@
 
     <TextView
         android:id="@+id/tvMessage"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@android:color/black"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
 
     <Button
         android:id="@+id/btnClose"
