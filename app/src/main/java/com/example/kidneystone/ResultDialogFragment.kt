@@ -1,6 +1,9 @@
 package com.example.kidneystone
 
 import android.os.Bundle
+import android.text.Layout
+import android.text.Spannable
+import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,12 +40,15 @@ class ResultDialogFragment : DialogFragment() {
             }
             risk -> { // Risk durumu
                 animationView.setAnimation(R.raw.unhealthy) // Olumsuz animasyon
-                messageView.text = "Bu ürün böbrek taşı riski taşıyabilir!\n$riskMessage"
+                messageView.text = "Bu ürün böbrek taşı riski taşıyabilir! $riskMessage"
+
+
+
             }
             else -> { // Risk yok
                 animationView.setAnimation(R.raw.healthy) // Olumlu animasyon
-                messageView.text =
-                    "Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin."
+                messageView.text =R.string.success_message.toString()
+
             }
         }
 
