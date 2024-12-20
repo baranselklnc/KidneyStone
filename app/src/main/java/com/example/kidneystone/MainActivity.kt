@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
-import com.budiyev.android.codescanner.ErrorCallback
+//import com.budiyev.android.codescanner.ErrorCallback
 import com.example.kidneystone.listener.DialogFragmentListener
 import com.example.kidneystone.network.ApiService
 import com.example.kidneystone.network.Product
