@@ -147,7 +147,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
         return if (riskReasons.isNotEmpty()) {
             "Risk faktörleri: ${riskReasons.joinToString(", ")}"
         } else {
-            "Böbrek taşı riski bulunmuyor."
+            "Lütfen bu ürünü alırken doktorunuza danışın."
         }
     }
 
