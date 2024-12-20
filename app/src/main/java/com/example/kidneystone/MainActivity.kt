@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
         val calcium = product.nutriments?.calcium_100g
 
         // Sodyum veya kalsiyum yüksekse risk var
-        if ((sodium != null && sodium > 1) || (calcium != null && calcium > 0.1)) {
+        if ((sodium != null && sodium > 0.07) || (calcium != null && calcium > 0.08)) {
             return true
         }
 
