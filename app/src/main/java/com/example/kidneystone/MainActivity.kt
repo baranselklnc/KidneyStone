@@ -72,7 +72,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
         val calcium = product.nutriments?.calcium_100g
 
         // Sodyum veya kalsiyum yüksekse risk var
-        if ((sodium != null && sodium > 1500.0) || (calcium != null && calcium > 1.0)) {
+        if ((sodium != null && sodium > 1) || (calcium != null && calcium > 0.1)) {
             return true
         }
 
@@ -140,8 +140,8 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
     private fun evaluateRiskMessage(sodium: Double?, calcium: Double?, oxalate: String?): String {
         val riskReasons = mutableListOf<String>()
 
-        if (sodium != null && sodium > 1.0) riskReasons.add("Yüksek sodyum")
-        if (calcium != null && calcium > 1.0) riskReasons.add("Yüksek kalsiyum")
+        if (sodium != null && sodium > 0.5) riskReasons.add("Yüksek sodyum")
+        if (calcium != null && calcium > 0.5) riskReasons.add("Yüksek kalsiyum")
         if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add("Oksalat içeriyor")
 
         return if (riskReasons.isNotEmpty()) {
