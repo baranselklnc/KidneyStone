@@ -64,7 +64,7 @@ This project aims to develop a mobile application for analyzing the contents of 
 ### Installation Steps
 1. Clone the project:
    ```bash
-   git clone https://github.com/baranselklnc/KidneyStone.app.git
+   git clone https://github.com/baranselklnc/KidneyStone.git
    ```
 
 2. Open the project in Android Studio.
