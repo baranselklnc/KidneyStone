@@ -19,9 +19,9 @@ class OnboardingActivity : AppCompatActivity() {
         wormDotsIndicator = findViewById(R.id.wormDotsIndicator)
 
         val fragments = listOf(
-            WelcomeFragment(),
-            FeatureFragment(),
-            CtaFragment()
+            WelcomeFragment(), // Hoşgeldin Ekranı
+            FeatureFragment(), // Özellik Ekranı
+            CtaFragment()  // Uygulamaya geçiş
         )
         val adapter = OnboardingPagerAdapter(this, fragments)
         viewPager.adapter = adapter
