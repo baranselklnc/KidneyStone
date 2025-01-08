@@ -5,7 +5,7 @@
     <string name="kapat">Kapat</string>
     <string name="welcome">Hoş Geldiniz! Sağlıklı bir yaşamın anahtarı doğru ürünleri tespit ederek başlar.</string>
     <string name="camera_focus">Lütfen kameranızı barkoda odaklayın</string>
-   <string name="cta_text">Senin için gerekli değerleri kontrol edip eğer böbrek taşı riski taşıyan ürün olduğunda seni uyaracağız. Sağlıklı bir yaşam için hadi başlayalım!</string>
+   <string name="cta_text">Senin için gerekli değerleri kontrol edip böbrek taşı riski taşıyan ürün olduğunda seni uyaracağız. Sağlıklı bir yaşam için hadi başlayalım!</string>
     <string name="animation_description">Alışveriş sepetinin üstünde oturan bir kadın ve elinde poşetler var </string>
     <string name="simdiBasla">Şimdi Başla</string>
     <string name="success_message">Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin.</string>
