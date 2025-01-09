@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -43,7 +44,12 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
         setContentView(R.layout.activity_main)
 
 
+        val helpIcon=findViewById<ImageView>(R.id.help_icon)
+        helpIcon.setOnClickListener {
+            val intent = Intent(this, OnboardingActivity::class.java)
+            startActivity(intent)
 
+        }
 
 
         val scannerView = findViewById<CodeScannerView>(R.id.scannerView)
