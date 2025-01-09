@@ -10,4 +10,5 @@
     <string name="simdiBasla">Şimdi Başla</string>
     <string name="success_message">Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin.</string>
     <string name="solakaydir">Sola Kaydırın.</string>
+    <string name="help_icon_description">soru isareti ikonu</string>
 </resources>
