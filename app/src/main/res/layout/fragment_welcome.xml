@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end"
         android:fontFamily="@font/poppins_bold"
-        android:text="Sola Kaydırın"
+        android:text="@string/solakaydir"
         android:textColor="@color/success"
         />
 </LinearLayout>
