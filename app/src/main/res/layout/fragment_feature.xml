@@ -32,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end"
-        android:fontFamily="@font/poppins_thin"
-        android:text="Sola Kaydırın"
+        android:fontFamily="@font/poppins_bold"
+        android:text="@string/sola_kaydir"
         android:textColor="@color/success"
         />
 </LinearLayout>
