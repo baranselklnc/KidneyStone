@@ -1,30 +1,45 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
     android:padding="16dp">
 
-    <ImageView
-        android:layout_width="394dp"
-        android:layout_height="385dp"
-        android:contentDescription="Step 1"
-        android:src="@drawable/welcome" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/supermarket_anim"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_margin="50dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="178dp"
+        android:layout_marginEnd="65dp"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
+        android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="252dp"
         android:fontFamily="@font/poppins_bold"
         android:gravity="center"
         android:text="@string/welcome"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginTop="30dp"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/supermarket_anim" />
 
     <TextView
-        android:layout_marginTop="30dp"
-        android:textSize="16sp"
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,5 +47,11 @@
         android:fontFamily="@font/poppins_bold"
         android:text="@string/solakaydir"
         android:textColor="@color/success"
-        />
-</LinearLayout>
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.943"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.918" />
+</androidx.constraintlayout.widget.ConstraintLayout>
