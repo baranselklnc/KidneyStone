@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                     } else if (response.status == 0 || response.status == 404) {
                         Toast.makeText(
                             this@MainActivity,
-                            "Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.",
+                            "${R.string.not_found}",
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
