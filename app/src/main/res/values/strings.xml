@@ -16,5 +16,9 @@
     <string name="high_sodium">Yüksek sodyum</string>
     <string name="high_calcium">Yüksek kalsiyum</string>
     <string name="contains_ox">Oksalat içeriyor</string>
+    <string name="risk_factors">Risk faktörleri</string>
+    <string name="doctor">Lütfen bu ürünü alırken doktorunuza danışın.</string>
+    <string name="denied_camera">Kamera izni reddedildi.</string>
+
 
 </resources>
