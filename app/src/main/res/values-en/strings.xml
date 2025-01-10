@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">KidneyStone</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kapat">Close</string>
+    <string name="welcome">Welcome! The key to a healthy life starts by identifying the right products.</string>
+    <string name="camera_focus">Please focus your camera on the barcode.</string>
+    <string name="cta_text">We will check the necessary values for you and warn you if there is a risk of kidney stones. Let\'s get started for a healthy life!</string>
+    <string name="animation_description">"A woman sitting on a shopping basket with bags in her hand. "</string>
+    <string name="simdiBasla">Lets Start</string>
+    <string name="success_message">Great! This product does not have the risk of forming kidney stones, you can safely consume it.</string>
+    <string name="solakaydir">Swipe Left.</string>
+    <string name="help_icon_description">question mark icon</string>
+</resources>
