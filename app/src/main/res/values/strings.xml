@@ -19,6 +19,8 @@
     <string name="risk_factors">Risk faktörleri</string>
     <string name="doctor">Lütfen bu ürünü alırken doktorunuza danışın.</string>
     <string name="denied_camera">Kamera izni reddedildi.</string>
+    <string name="required_camera">Kamera izni gerekiyor.</string>
+    <string name="be_risk">Bu ürün böbrek taşı riski taşıyabilir!</string>
 
 
 </resources>
