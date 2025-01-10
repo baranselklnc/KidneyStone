@@ -121,7 +121,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                     } else {
                         Toast.makeText(
                             this@MainActivity,
-                            "Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.",
+                            "${R.string.unexpected}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -130,7 +130,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@MainActivity,
-                        "Zaman aşımı hatası. Lütfen internet bağlantınızı kontrol edin.",
+                        "${R.string.timeout}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -146,14 +146,14 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
     private fun evaluateRiskMessage(sodium: Double?, calcium: Double?, oxalate: String?): String {
         val riskReasons = mutableListOf<String>()
 
-        if (sodium != null && sodium > 0.5) riskReasons.add("Yüksek sodyum")
-        if (calcium != null && calcium > 0.5) riskReasons.add("Yüksek kalsiyum")
-        if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add("Oksalat içeriyor")
+        if (sodium != null && sodium > 0.5) riskReasons.add(R.string.high_sodium.toString())
+        if (calcium != null && calcium > 0.5) riskReasons.add(R.string.high_calcium.toString())
+        if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add(R.string.contains_ox.toString())
 
         return if (riskReasons.isNotEmpty()) {
-            "Risk faktörleri: ${riskReasons.joinToString(", ")}"
+            "${R.string.risk_factors} : ${riskReasons.joinToString(", ")}"
         } else {
-            "Lütfen bu ürünü alırken doktorunuza danışın."
+            "${R.string.doctor}"
         }
     }
 
@@ -163,7 +163,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
             if (isGranted) {
                 codeScanner.startPreview()
             } else {
-                Toast.makeText(this, "Kamera izni reddedildi.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${R.string.denied_camera}", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -172,7 +172,7 @@ class MainActivity : AppCompatActivity(),DialogFragmentListener {
                 codeScanner.startPreview()
             }
             shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
-                Toast.makeText(this, "Kamera izni gerekiyor.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "${R.string.required_camera}", Toast.LENGTH_SHORT).show()
             }
             else -> {
                 requestPermissionLauncher.launch(Manifest.permission.CAMERA)
