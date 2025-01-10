@@ -19,7 +19,11 @@
     <string name="contains_ox">Contains oxalate</string>
     <string name="risk_factors">Risk factors</string>
     <string name="doctor">Please consult your doctor when taking this product.</string>
-    <string name="denied_camera">Camera permission denied</string>
+    <string name="denied_camera">Camera permission denied.</string>
+    <string name="required_camera">Camera permission required.</string>
+    <string name="be_risk">This product may carry a risk of kidney stones!</string>
+
+
 
 
 
