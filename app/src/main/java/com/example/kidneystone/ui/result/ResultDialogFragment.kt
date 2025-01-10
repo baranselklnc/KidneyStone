@@ -33,11 +33,11 @@ class ResultDialogFragment : DialogFragment() {
         when {
             notFound -> { // Ürün bulunamadı durumu
                 animationView.setAnimation(R.raw.notfound) // Ürün bulunamadı animasyonu
-                messageView.text = "Üzgünüz, bu ürün veritabanımızda bulunamadı."
+                messageView.text = "${R.string.not_found}"
             }
             risk -> { // Risk durumu
                 animationView.setAnimation(R.raw.unhealthy) // Olumsuz animasyon
-                messageView.text = "Bu ürün böbrek taşı riski taşıyabilir! $riskMessage"
+                messageView.text = "${R.string.be_risk} $riskMessage"
 
 
 
