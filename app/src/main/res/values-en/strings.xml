@@ -15,5 +15,8 @@
     <string name="unexpected">An unexpected error occurred. Please try again.</string>
     <string name="timeout">Timeout error. Please check your internet connection.</string>
     <string name="high_sodium">High sodium</string>
+    <string name="high_calcium">High calcium</string>
+    <string name="contains_ox">Contains oxalate</string>
+
 
 </resources>
