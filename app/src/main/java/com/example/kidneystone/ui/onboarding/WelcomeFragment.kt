@@ -27,7 +27,9 @@ class WelcomeFragment : Fragment() {
         val animationView= view.findViewById<LottieAnimationView>(R.id.supermarket_anim)
         animationView.setAnimation(R.raw.supermarket)
         animationView.playAnimation()
-
+        val animationFruit=view.findViewById<LottieAnimationView>(R.id.fruits)
+        animationFruit.setAnimation(R.raw.fruits)
+        animationFruit.playAnimation()
 
 
     }
