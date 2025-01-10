@@ -14,5 +14,7 @@
     <string name="unexpected">Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.</string>
     <string name="timeout">Zaman aşımı hatası. Lütfen internet bağlantınızı kontrol edin.</string>
     <string name="high_sodium">Yüksek sodyum</string>
+    <string name="high_calcium">Yüksek kalsiyum</string>
+    <string name="contains_ox">Oksalat içeriyor</string>
 
 </resources>
