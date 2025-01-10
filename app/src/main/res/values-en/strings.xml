@@ -11,4 +11,7 @@
     <string name="success_message">Great! This product does not have the risk of forming kidney stones, you can safely consume it.</string>
     <string name="solakaydir">Swipe Left.</string>
     <string name="help_icon_description">question mark icon</string>
+    <string name="not_found">Sorry, the product with this barcode was not found in our database.</string>
+    <string name="unexpected">An unexpected error occurred. Please try again.</string>
+
 </resources>
