@@ -17,6 +17,11 @@
     <string name="high_sodium">High sodium</string>
     <string name="high_calcium">High calcium</string>
     <string name="contains_ox">Contains oxalate</string>
+    <string name="risk_factors">Risk factors</string>
+    <string name="doctor">Please consult your doctor when taking this product.</string>
+    <string name="denied_camera">Camera permission denied</string>
+
+
 
 
 </resources>
