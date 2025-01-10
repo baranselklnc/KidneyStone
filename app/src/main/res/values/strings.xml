@@ -10,4 +10,7 @@
     <string name="success_message">Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin.</string>
     <string name="solakaydir">Sola Kaydırın.</string>
     <string name="help_icon_description">soru isareti ikonu</string>
+    <string name="not_found">Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.</string>
+    <string name="unexpected">Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.</string>
+
 </resources>
