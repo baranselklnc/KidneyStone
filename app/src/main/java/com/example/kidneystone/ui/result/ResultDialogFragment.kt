@@ -26,33 +26,32 @@ class ResultDialogFragment : DialogFragment() {
         val messageView = view.findViewById<TextView>(R.id.tvMessage)
         val closeButton = view.findViewById<Button>(R.id.btnClose)
 
+        // Argümanları alıyoruz.
         val risk = arguments?.getBoolean(ARG_RISK, false) ?: false
         val riskMessage = arguments?.getString(ARG_RISK_MESSAGE, "")
         val notFound = arguments?.getBoolean(ARG_NOT_FOUND, false) ?: false
 
+        // Durumları kontrol ediyoruz ve uygun animasyonları ve mesajları yerleştiriyoruz.
         when {
             notFound -> { // Ürün bulunamadı durumu
                 animationView.setAnimation(R.raw.notfound) // Ürün bulunamadı animasyonu
-                messageView.text = "${R.string.not_found}"
+                messageView.text = getString(R.string.not_found) // Mesaj
             }
             risk -> { // Risk durumu
-                animationView.setAnimation(R.raw.unhealthy) // Olumsuz animasyon
-                messageView.text = "${R.string.be_risk} $riskMessage"
-
-
-
+                animationView.setAnimation(R.raw.unhealthy) // Riskli animasyon
+                messageView.text = getString(R.string.be_risk) // Mesajda riskli içerik
             }
-            else -> { // Risk yok
-                animationView.setAnimation(R.raw.healthy) // Olumlu animasyon
-                messageView.text =R.string.success_message.toString()
-
+            else -> { // Güvenli ürün durumu
+                animationView.setAnimation(R.raw.healthy) // Güvenli animasyon
+                messageView.text = getString(R.string.success_message) // Güvenli mesaj
             }
         }
 
+        // Animasyonu başlatıyoruz.
         animationView.playAnimation()
 
         closeButton.setOnClickListener {
-            dismiss()
+            dismiss() // Dialog kapanınca
         }
     }
 
