@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">KidneyStone</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="kapat">Kapat</string>
+    <string name="welcome">Hoş Geldiniz! Sağlıklı bir yaşamın anahtarı doğru ürünleri tespit ederek başlar.</string>
+    <string name="camera_focus">Lütfen kameranızı barkoda odaklayın</string>
+    <string name="cta_text">Senin için gerekli değerleri kontrol edip böbrek taşı riski taşıyan ürün olduğunda seni uyaracağız. Sağlıklı bir yaşam için hadi başlayalım!</string>
+    <string name="animation_description">Alışveriş sepetinin üstünde oturan bir kadın ve elinde poşetler var. </string>
+    <string name="simdiBasla">Şimdi Başla</string>
+    <string name="success_message">Harika! Bu ürün böbrek taşı oluşturma riskine sahip değil güvenle tüketebilirsin.</string>
+    <string name="solakaydir">Sola Kaydırın.</string>
+    <string name="help_icon_description">soru isareti ikonu</string>
+    <string name="not_found">Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.</string>
+    <string name="unexpected">Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.</string>
+    <string name="timeout">Zaman aşımı hatası. Lütfen internet bağlantınızı kontrol edin.</string>
+    <string name="high_sodium">Yüksek sodyum</string>
+    <string name="high_calcium">Yüksek kalsiyum</string>
+    <string name="contains_ox">Oksalat içeriyor</string>
+    <string name="risk_factors">Risk faktörleri</string>
+    <string name="doctor">Lütfen bu ürünü alırken doktorunuza danışın.</string>
+    <string name="denied_camera">Kamera izni reddedildi.</string>
+    <string name="required_camera">Kamera izni gerekiyor.</string>
+    <string name="be_risk">Bu ürün böbrek taşı riski taşıyabilir!</string>
+
+
+</resources>
