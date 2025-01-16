@@ -1,39 +1,29 @@
 package com.example.kidneystone.network
 
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.Headers
 import retrofit2.http.POST
 
 interface GPTApiService {
+    // API çağrısı: POST isteği, içerik türü ve Authorization header'ı ile
     @Headers("Content-Type: application/json", "Authorization: Bearer YOUR_API_KEY")
     @POST("v1/completions")
     suspend fun getGPTResponse(@Body request: GPTRequest): GPTResponse
 }
 
+// GPT API'sine gönderilecek istek yapısı
 data class GPTRequest(
-    val model: String = "text-davinci-003",
-    val prompt: String,
-    val max_tokens: Int = 50
+    val model: String = "text-davinci-003", // Kullanılacak model
+    val prompt: String, // API'ye gönderilecek metin
+    val max_tokens: Int = 10 // Döndürülecek maksimum token sayısı
 )
 
+// API'den gelen cevabın yapısı
 data class GPTResponse(
-    val choices: List<Choice>
+    val choices: List<Choice> // Dönüş yapılacak seçenekler (metin)
 )
 
+// Her bir seçenek (response içindeki metin)
 data class Choice(
-    val text: String
+    val text: String // API'den dönen metin
 )
-
-object GPTApiClient {
-    private const val BASE_URL = "https://api.openai.com/"
-
-    val instance: GPTApiService by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(GPTApiService::class.java)
-    }
-}
