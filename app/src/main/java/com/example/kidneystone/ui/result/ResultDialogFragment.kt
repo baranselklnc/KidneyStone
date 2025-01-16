@@ -39,7 +39,7 @@ class ResultDialogFragment : DialogFragment() {
             }
             risk -> { // Risk durumu
                 animationView.setAnimation(R.raw.unhealthy) // Riskli animasyon
-                messageView.text = getString(R.string.be_risk) // Mesajda riskli içerik
+                messageView.text = riskMessage ?: getString(R.string.be_risk)
             }
             else -> { // Güvenli ürün durumu
                 animationView.setAnimation(R.raw.healthy) // Güvenli animasyon
