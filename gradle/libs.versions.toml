@@ -16,6 +16,7 @@ constraintlayout = "2.2.0"
 retrofit = "2.10.0"
 viewpager2 = "1.1.0"
 playServicesAnalyticsImpl = "18.2.0"
+securityCryptoKtx = "1.0.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
