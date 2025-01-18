@@ -27,7 +27,9 @@ import kotlinx.coroutines.withContext
 class MainActivity : AppCompatActivity(), DialogFragmentListener {
 
     private lateinit var codeScanner: CodeScanner
-
+    fun Context.showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
     override fun onDialogClosed() {
         codeScanner.startPreview() // Kamerayı yeniden başlat
     }
@@ -87,8 +89,8 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
     private fun evaluateRiskMessage(sodium: Double?, calcium: Double?, oxalate: String?): String {
         val riskReasons = mutableListOf<String>()
 
-        if (sodium != null && sodium > 0.5) riskReasons.add(R.string.high_sodium.toString())
-        if (calcium != null && calcium > 0.5) riskReasons.add(R.string.high_calcium.toString())
+        if (sodium != null && sodium > 0.5) riskReasons.add(getString(R.string.high_sodium))
+        if (calcium != null && calcium > 0.5) riskReasons.add(getString(R.string.high_calcium))
         if (oxalate != null && oxalate.contains("oxalate", ignoreCase = true)) riskReasons.add(R.string.contains_ox.toString())
 
         return if (riskReasons.isNotEmpty()) {
@@ -112,9 +114,12 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                             product.ingredients_text
                         )
                         navigateToResultScreen(risk, riskMessage)
+                        showToast("Product info fetched")
+
                     } else {
                         // Ürün bulunamadığında AI analizini çağır
                         fetchAIAnalysis(barcode)
+                        showToast("AI analysis started")
                     }
                 }
             } catch (e: Exception) {
@@ -143,13 +148,17 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                     getString(R.string.be_risk)
                 }
 
+                // Main Thread'e geçerek UI güncellemesi yapıyoruz.
                 withContext(Dispatchers.Main) {
+                    // AI sonuca göre Risk mesajı ve UI işlemi
                     navigateToResultScreen(!isSafe, riskMessage)
+
+                    // Toast mesajı ekleniyor
+                    Toast.makeText(this@MainActivity, "AI analysis result: $aiResult", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
                 }
             }
         }
