@@ -11,7 +11,7 @@ object GPTApiClient {
     private val client = OkHttpClient.Builder()
         .addInterceptor { chain ->
             val request = chain.request().newBuilder()
-                .addHeader("Authorization", "Bearer YOUR_API_KEY") // API Anahtarını buraya ekleyin
+                .addHeader("Authorization", "Bearer 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") // API Anahtarını buraya ekleyin
                 .addHeader("Content-Type", "application/json")
                 .build()
             chain.proceed(request)
