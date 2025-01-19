@@ -124,8 +124,8 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
+                    codeScanner.startPreview()
                 }
             }
         }
