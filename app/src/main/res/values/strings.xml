@@ -12,7 +12,7 @@
     <string name="solakaydir">Swipe Left.</string>
     <string name="help_icon_description">question mark icon</string>
     <string name="not_found">Sorry, the product with this barcode was not found in our database.</string>
-    <string name="unexpected">An unexpected error occurred. Please try again.</string>
+    <string name="unexpected">The camera didnt clearly detect the barcode or this product is not a food or beverage product.</string>
     <string name="timeout">Timeout error. Please check your internet connection.</string>
     <string name="high_sodium">High sodium</string>
     <string name="high_calcium">High calcium</string>
