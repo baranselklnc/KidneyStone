@@ -11,7 +11,7 @@
     <string name="solakaydir">Sola Kaydırın.</string>
     <string name="help_icon_description">soru isareti ikonu</string>
     <string name="not_found">Üzgünüz, bu barkoda ait ürün veritabanımızda bulunamadı.</string>
-    <string name="unexpected">Beklenmedik bir hata oluştu. Lütfen tekrar deneyin.</string>
+    <string name="unexpected">Kamera barkodu net bir şekilde algılayamadı veya bu ürün bir yiyecek içecek ürünü değil</string>
     <string name="timeout">Zaman aşımı hatası. Lütfen internet bağlantınızı kontrol edin.</string>
     <string name="high_sodium">Yüksek sodyum</string>
     <string name="high_calcium">Yüksek kalsiyum</string>
