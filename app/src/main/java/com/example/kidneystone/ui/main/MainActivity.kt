@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
         return false
     }
 
-    private fun navigateToResultScreen(risk: Boolean, riskMessage: String) {
+    private fun navigateToResultScreen(risk: Boolean? = null, riskMessage: String? = null, notFound: Boolean = false) {
         val dialog = ResultDialogFragment.newInstance(risk, riskMessage)
         dialog.show(supportFragmentManager, "ResultDialog")
     }
@@ -124,8 +125,10 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
-                    codeScanner.startPreview()
+                  //  Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
+                    navigateToResultScreen(risk = null, riskMessage = null, notFound = true)
+
+
                 }
             }
         }
@@ -134,6 +137,7 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
     private fun fetchAIAnalysis(barcode: String) {
         CoroutineScope(Dispatchers.IO).launch {
             try {
+                Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
                 val request = GPTRequest(
                     prompt = "Barcode $barcode: Is this product safe for kidney stone patients? Respond with 'safe' or 'unsafe'.",
                     max_tokens = 10
@@ -148,21 +152,19 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                     getString(R.string.be_risk)
                 }
 
-                // Main Thread'e geçerek UI güncellemesi yapıyoruz.
                 withContext(Dispatchers.Main) {
-                    // AI sonuca göre Risk mesajı ve UI işlemi
                     navigateToResultScreen(!isSafe, riskMessage)
-
-                    // Toast mesajı ekleniyor
                     Toast.makeText(this@MainActivity, "AI analysis result: $aiResult", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
+                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
                     Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
+
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun requestCameraPermission() {
