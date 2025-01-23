@@ -105,31 +105,24 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 val response = ApiService.api.getProductInfo(barcode)
-                withContext(Dispatchers.Main) {
-                    if (response.status == 1 && response.product != null) {
-                        val product = response.product
-                        val risk = evaluateRisk(product)
-                        val riskMessage = evaluateRiskMessage(
-                            product.nutriments?.sodium_100g,
-                            product.nutriments?.calcium_100g,
-                            product.ingredients_text
-                        )
-                        navigateToResultScreen(risk, riskMessage)
-                        showToast("Product info fetched")
 
-                    } else {
-                        // Ürün bulunamadığında AI analizini çağır
-                        fetchAIAnalysis(barcode)
-                        showToast("AI analysis started")
+                if (response.status == 1 && response.product != null) {
+                    // Ürün bulundu
+                    val riskMessage = evaluateRisk(response.product)
+                    withContext(Dispatchers.Main) {
+                        navigateToResultScreen(false, riskMessage.toString())
                     }
+                } else {
+                    // Ürün bulunamadı, AI analizi yap
+                    Log.d("OpenFoodFacts", "Product not found. Status: ${response.status}")
+                    fetchAIAnalysis(barcode)
                 }
             } catch (e: Exception) {
+                Log.e("Product_Error", "Failed to fetch product: ${e.message}")
                 withContext(Dispatchers.Main) {
-                  //  Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
-                    navigateToResultScreen(risk = null, riskMessage = null, notFound = true)
-
-
+                    Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
                 }
+                codeScanner.startPreview()
             }
         }
     }
@@ -138,6 +131,9 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
+                Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
+                Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
+
                 val request = GPTRequest(
                     prompt = "Barcode $barcode: Is this product safe for kidney stone patients? Respond with 'safe' or 'unsafe'.",
                     max_tokens = 10
@@ -145,6 +141,8 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
                 val response = GPTApiClient.instance.getGPTResponse(request)
 
                 val aiResult = response.choices.firstOrNull()?.text?.trim() ?: "unknown"
+                Log.d("AI_Response", "AI result: $aiResult")
+
                 val isSafe = aiResult.equals("safe", ignoreCase = true)
                 val riskMessage = if (isSafe) {
                     getString(R.string.success_message)
@@ -154,11 +152,14 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
 
                 withContext(Dispatchers.Main) {
                     navigateToResultScreen(!isSafe, riskMessage)
-                    Toast.makeText(this@MainActivity, "AI analysis result: $aiResult", Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
+                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
+                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
+
+
                     Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
                 }
             }
