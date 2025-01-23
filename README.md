@@ -1,4 +1,4 @@
-# Kidney Stone Risk Detection Application 
+# Kidney Stone Risk Detection App
 
 ## Overview
 This project aims to develop a mobile application for analyzing the contents of supermarket products to identify minerals or components that may increase the risk of kidney stones. Users can scan product barcodes using a barcode reader to determine the risk level.
