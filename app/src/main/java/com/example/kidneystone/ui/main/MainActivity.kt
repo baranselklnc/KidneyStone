@@ -131,8 +131,7 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
         CoroutineScope(Dispatchers.IO).launch {
             try {
                 Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
-                Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
-                Log.d("AI_Analysis", "Fetching AI analysis for barcode: $barcode")
+
 
                 val request = GPTRequest(
                     prompt = "Barcode $barcode: Is this product safe for kidney stone patients? Respond with 'safe' or 'unsafe'.",
