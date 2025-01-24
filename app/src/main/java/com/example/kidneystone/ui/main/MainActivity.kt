@@ -155,10 +155,7 @@ class MainActivity : AppCompatActivity(), DialogFragmentListener {
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
                     Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
-                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
-                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
-                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
-                    Log.e("AI_Error", "Failed to fetch AI analysis: ${e.message}")
+
 
 
                     Toast.makeText(this@MainActivity, getString(R.string.unexpected), Toast.LENGTH_SHORT).show()
