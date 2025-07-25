@@ -1,0 +1,5 @@
+# Bu dosya örnek amaçlıdır. Kendi API anahtarınızı local.properties dosyasına ekleyin.
+# local.properties dosyası git'e commit edilmez.
+
+# OpenAI API Anahtarı
+OPENAI_API_KEY=your_openai_api_key_here 

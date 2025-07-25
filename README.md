@@ -72,7 +72,7 @@ This project aims to develop a mobile application for analyzing the contents of 
 
 3. Add the required API keys to the `local.properties` file:
    ```
-   OPENFOODFACTS_API_KEY=your_api_key_here
+   OPENAI_API_KEY=your_openai_api_key_here
    ```
 
 4. Build and run the application.

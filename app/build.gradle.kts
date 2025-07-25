@@ -16,8 +16,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
+        // API anahtarlarını BuildConfig'e ekle
+        buildConfigField("String", "OPENAI_API_KEY", "\"${properties.getProperty('OPENAI_API_KEY', '')}\"")
     }
     buildFeatures {
+        buildConfig = true
     }
 
 
